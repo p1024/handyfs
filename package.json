@@ -1,0 +1,27 @@
+{
+  "name": "handyfs",
+  "version": "1.0.0",
+  "description": "handy File operation Functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/p1024/handyfs.git"
+  },
+  "keywords": [
+    "fs",
+    "operation"
+  ],
+  "author": "p1024",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.7"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "mocha": "^3.0.2"
+  }
+}
