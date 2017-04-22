@@ -103,7 +103,8 @@ handyfs.getFiles = async function(fp) {
 	let fileList = await this.readdirAsync(fp);
 	let rtnFileList = [];
 	for(let i=0, ln=fileList.length; i<ln; i++) {
-		let isDir = await this.isDir(fp + SEP + file);
+		let file = fileList[i];
+		let isDir = await this.isdir(fp + SEP + file);
 		if(isDir) {
 			let fpList = await this.getFiles(fp + SEP + file);
 			rtnFileList.push(fpList);
