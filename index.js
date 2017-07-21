@@ -393,4 +393,23 @@ handyfs.randFile = async function(dir, exts, num) {
 	return resultFileList;
 };
 
+
+handyfs.windowsNameSafe = async function (name) {
+	let replaceList = [
+		[/\\/g, '-'],
+		[/\//g, '-'],
+		[/:/g, '-'],
+		[/\*/g, ' '],
+		[/\?/g, ' '],
+		[/"/g, '\''],
+		[/</g, '('],
+		[/>/g, ')'],
+		[/\|/g, '_']
+	];
+
+	return replaceList.reduce((name, k)=>{
+		return name.replace(k[0], k[1]);
+	}, name);
+}
+
 module.exports = handyfs;
