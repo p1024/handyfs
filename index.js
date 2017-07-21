@@ -394,7 +394,7 @@ handyfs.randFile = async function(dir, exts, num) {
 };
 
 
-handyfs.windowsNameSafe = async function (name) {
+handyfs.windowsNameSafe = function (name) {
 	let replaceList = [
 		[/\\/g, '-'],
 		[/\//g, '-'],
