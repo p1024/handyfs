@@ -7,6 +7,7 @@
 
 const PM = require('bluebird'),
 	handyfs = PM.promisifyAll(require('fs')),
+	rimraf = PM.promisify(require('rimraf')),
 	crypto = require('crypto'),
 	path = require('path'),
 	SEP = path.sep;
@@ -330,24 +331,24 @@ handyfs.mkdirSimple = async function(fpath) {
  * @param  {string} dir
  * @return {string}
  */
-handyfs.rmdirSimple = async function(dir) {
-	let isDir = await this.isdir(dir);
-	if (isDir) {
-		let fileList = await this.readdirAsync(dir);
-		for(let i=0, ln=fileList.length; i<ln; i++) {
-			let file = fileList[i];
-			let isDir = await this.isdir(dir + SEP + file);
-			if(isDir) {
-				await this.rmdirSimple(dir + SEP + file);
-			} else {
-				await this.unlinkAsync(dir + SEP + file);
-			}
-		}
-		await this.rmdirAsync(dir);
-	}
-	return dir;
-};
-
+// handyfs.rmdirSimple = async function(dir) {
+// 	let isDir = await this.isdir(dir);
+// 	if (isDir) {
+// 		let fileList = await this.readdirAsync(dir);
+// 		for(let i=0, ln=fileList.length; i<ln; i++) {
+// 			let file = fileList[i];
+// 			let isDir = await this.isdir(dir + SEP + file);
+// 			if(isDir) {
+// 				await this.rmdirSimple(dir + SEP + file);
+// 			} else {
+// 				await this.unlinkAsync(dir + SEP + file);
+// 			}
+// 		}
+// 		await this.rmdirAsync(dir);
+// 	}
+// 	return dir;
+// };
+handyfs.rmdirSimple = rimraf;
 
 /**
  * a handy method use like `mkdir -u [path]` and `touch [path]`, combination of mkdirSimple and writeFile

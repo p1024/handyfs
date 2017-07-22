@@ -1,6 +1,6 @@
 {
   "name": "handyfs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "handy File operation Functions",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,8 @@
   "author": "p1024",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.4.7"
+    "bluebird": "^3.4.7",
+    "rimraf": "^2.6.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
