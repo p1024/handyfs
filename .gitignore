@@ -1,6 +1,2 @@
 **/node_modules
-typings.json
-jsconfig.json
 /.vscode
-/typings
-/demo
