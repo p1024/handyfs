@@ -1,0 +1,8 @@
+{
+  "editor.tabSize": 4,
+  "editor.fontSize": 22,
+  "eslint.validate": [
+    "typescript"
+  ],
+  "typescript.locale": "en"
+}
