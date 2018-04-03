@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "handy File operation Functions",
   "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "scripts": {
     "test": "mocha test build/test/"
   },
