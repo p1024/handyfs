@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const handyFS = require('../index');
+const handyFS = require("../index");
 const fs = require("fs");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");

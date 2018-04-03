@@ -1,4 +1,4 @@
-const handyFS = require('../index');
+import * as handyFS from '../index';
 import * as fs from 'fs';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
