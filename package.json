@@ -18,7 +18,6 @@
   "author": "p1024",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "rimraf": "^2.6.1"
   },
   "devDependencies": {
