@@ -107,10 +107,7 @@ async function mv(dest, src) {
     return dest;
 }
 exports.mv = mv;
-function cut(dest, src) {
-    return mv(dest, src);
-}
-exports.cut = cut;
+exports.cut = mv;
 function hashFile(fp, hashAlgorithm) {
     if (crypto.getHashes().indexOf(hashAlgorithm) < 0) {
         throw Error('insupport hash algorithm');

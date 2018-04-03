@@ -28,7 +28,7 @@ export function copy(dest: string, src: string): Promise<string>;
  */
 export function mv(dest: string, src: string): Promise<string>;
 /**
- * 剪切文件
+ * 剪切文件，mv的別名
  * @param dest 剪切的目的地
  * @param src 剪切的源地址
  */

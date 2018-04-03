@@ -144,13 +144,11 @@ export async function mv(dest: string, src: string): Promise<string> {
     return dest;
 }
 /**
- * 剪切文件
+ * 剪切文件，mv的別名
  * @param dest 剪切的目的地
  * @param src 剪切的源地址
  */
-export function cut(dest: string, src: string): Promise<string> {
-    return mv(dest, src);
-}
+export const cut: Function = mv;
 /**
  * 計算一個文件的哈希值
  * @param fp 文件的路徑
