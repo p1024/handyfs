@@ -11,7 +11,7 @@ class Utils {
     }
     static flatten(arr) {
         return arr.reduce((retArr, ele) => {
-            return arr.concat(Array.isArray(ele) ? Utils.flatten(ele) : ele);
+            return retArr.concat(Array.isArray(ele) ? Utils.flatten(ele) : ele);
         }, []);
     }
     static splitDir(fp) {
@@ -54,8 +54,7 @@ async function getFiles(dir) {
     for (let i = 0, ln = fileList.length; i < ln; i++) {
         const file = fileList[i];
         const fp = path.join(dir, file);
-        let isDir = await isdir(dir);
-        if (isDir) {
+        if (await isdir(fp)) {
             let fpList = await getFiles(fp);
             rtnFileList.push(fpList);
         }

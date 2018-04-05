@@ -24,7 +24,7 @@ class Utils {
      */
     static flatten(arr: any[]): any[] {
         return arr.reduce((retArr, ele) => {
-            return arr.concat(Array.isArray(ele) ? Utils.flatten(ele) : ele);
+            return retArr.concat(Array.isArray(ele) ? Utils.flatten(ele) : ele);
         }, []);
     }
     /**
@@ -83,8 +83,7 @@ export async function getFiles(dir: string): Promise<any[]> {
     for (let i = 0, ln = fileList.length; i < ln; i++) {
         const file: string = fileList[i];
         const fp: string = path.join(dir, file);
-        let isDir: boolean = await isdir(dir);
-        if (isDir) {
+        if (await isdir(fp)) {
             let fpList: string[] = await getFiles(fp);
             rtnFileList.push(fpList);
         } else {
