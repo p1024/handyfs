@@ -110,7 +110,7 @@ export async function listFiles(dir: string, includeExt: RegExp | string = /.*/)
     } else {
         testFn = (dir: string) => includeExt.test(path.extname(dir).replace('.', ''));
     }
-    let fpList = await this.getFiles(dir);
+    let fpList = await getFiles(dir);
     return Utils
         .flatten(fpList)
         .filter((fp: string) => testFn(fp));
@@ -230,7 +230,7 @@ export async function renameExts(dir: string, extMap: { [key: string]: string } 
  */
 export async function copydir(dest: string, src: string): Promise<any[]> {
     let copyFileList: any[] = [];
-    await this._mkdir(dest);
+    await _mkdir(dest);
     const fileList: string[] = await readdirAsync(src);
     for (let i = 0, ln = fileList.length; i < ln; i++) {
         const file: string = fileList[i];
@@ -238,8 +238,8 @@ export async function copydir(dest: string, src: string): Promise<any[]> {
         const destPath = path.join(dest, file);
         const srcPath = path.join(src, file);
         const fpList = isDir
-            ? await this.copydir(destPath, srcPath)
-            : await this.copy(destPath, srcPath);
+            ? await copydir(destPath, srcPath)
+            : await copy(destPath, srcPath);
         copyFileList.push(fpList);
     }
     return copyFileList;

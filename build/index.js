@@ -81,7 +81,7 @@ async function listFiles(dir, includeExt = /.*/) {
     else {
         testFn = (dir) => includeExt.test(path.extname(dir).replace('.', ''));
     }
-    let fpList = await this.getFiles(dir);
+    let fpList = await getFiles(dir);
     return Utils
         .flatten(fpList)
         .filter((fp) => testFn(fp));
@@ -170,7 +170,7 @@ async function renameExts(dir, extMap = {}) {
 exports.renameExts = renameExts;
 async function copydir(dest, src) {
     let copyFileList = [];
-    await this._mkdir(dest);
+    await _mkdir(dest);
     const fileList = await readdirAsync(src);
     for (let i = 0, ln = fileList.length; i < ln; i++) {
         const file = fileList[i];
@@ -178,8 +178,8 @@ async function copydir(dest, src) {
         const destPath = path.join(dest, file);
         const srcPath = path.join(src, file);
         const fpList = isDir
-            ? await this.copydir(destPath, srcPath)
-            : await this.copy(destPath, srcPath);
+            ? await copydir(destPath, srcPath)
+            : await copy(destPath, srcPath);
         copyFileList.push(fpList);
     }
     return copyFileList;
