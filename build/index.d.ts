@@ -1,4 +1,7 @@
 /// <reference types="node" />
+interface DeepArray<T> extends Array<T | DeepArray<T>> { }
+/* 深層次疊加的字符串數組 */
+export type DeepStringArray = DeepArray<string>;
 /**
  * 判斷路徑是否爲目錄
  * @param fp 路徑
@@ -14,7 +17,7 @@ export function getFiles(dir: string): Promise<any[]>;
  * @param dir 目錄的路徑
  * @param includeExt 需要獲取文件的後綴
  */
-export function listFiles(dir: string, includeExt: RegExp | string): Promise<string[]>;
+export function listFiles(dir: string, includeExt: RegExp | string): Promise<DeepStringArray>;
 /**
  * 複製文件
  * @param dest 複製的目的地
@@ -60,7 +63,7 @@ export function renameExts(dir: string, extMap: { [key: string]: string }): Prom
  * @param dest 目的地目錄的路徑
  * @param src 源目錄的路徑
  */
-export function copydir(dest: string, src: string): Promise<any[]>;
+export function copydir(dest: string, src: string): Promise<DeepStringArray>;
 /**
  * 簡單地創建一個目錄，類似於bash中的`mkdir -p`
  * @param fp 想要創建的目錄的路徑

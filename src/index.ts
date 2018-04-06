@@ -9,6 +9,10 @@ import * as path from 'path';
 import { promisify } from 'util';
 
 const rimrafAsync = promisify(rimraf);
+interface DeepArray<T> extends Array<T | DeepArray<T>> { }
+/* 深層次疊加的字符串數組 */
+export type DeepStringArray = DeepArray<string>;
+
 class Utils {
     /**
      * 生成一個範圍內的隨機整數
@@ -77,14 +81,14 @@ export async function isdir(fp: string): Promise<boolean> {
  * 尋找該目錄下的所有文件，數組結構安照目錄結構保持
  * @param dir 目錄的路徑
  */
-export async function getFiles(dir: string): Promise<any[]> {
+export async function getFiles(dir: string): Promise<DeepStringArray> {
     const fileList: string[] = await readdirAsync(dir);
-    const rtnFileList: any[] = [];
+    const rtnFileList: DeepStringArray = [];
     for (let i = 0, ln = fileList.length; i < ln; i++) {
         const file: string = fileList[i];
         const fp: string = path.join(dir, file);
         if (await isdir(fp)) {
-            let fpList: string[] = await getFiles(fp);
+            let fpList: DeepStringArray = await getFiles(fp);
             rtnFileList.push(fpList);
         } else {
             let fpList: string = path.normalize(fp);
@@ -227,8 +231,8 @@ export async function renameExts(dir: string, extMap: { [key: string]: string } 
  * @param dest 目的地目錄的路徑
  * @param src 源目錄的路徑
  */
-export async function copydir(dest: string, src: string): Promise<any[]> {
-    let copyFileList: any[] = [];
+export async function copydir(dest: string, src: string): Promise<DeepStringArray> {
+    let copyFileList: DeepStringArray = [];
     await _mkdir(dest);
     const fileList: string[] = await readdirAsync(src);
     for (let i = 0, ln = fileList.length; i < ln; i++) {
