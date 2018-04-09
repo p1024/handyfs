@@ -131,8 +131,9 @@ describe('HandyFS unit test', function() {
             const copyFolderDir = path.join(BASEDIR, 'renamefolder');
             await mkdirAsync(copyFolderDir);
             if (platform() === 'win32') {
-                console.log(`xcopy ${DEEPFOLDERDIR} ${copyFolderDir} /s/e`);
                 await execAsync(`xcopy ${DEEPFOLDERDIR} ${copyFolderDir} /s/e`);
+            } else {
+                await execAsync(`cp -r ${DEEPFOLDERDIR}/* ${copyFolderDir}`);
             }
             const newList = await HandyFS.renameExts(copyFolderDir, { js: 'txt' });
             newList.should.deep.equal(DEEPFLATTEN(copyFolderDir).map(dir => {
