@@ -108,19 +108,21 @@ async function mv(dest, src) {
 exports.mv = mv;
 exports.cut = mv;
 function hashFile(fp, hashAlgorithm) {
-    if (crypto.getHashes().indexOf(hashAlgorithm) < 0) {
-        throw Error('insupport hash algorithm');
-    }
     return new Promise((resolve, reject) => {
+        if (crypto.getHashes().indexOf(hashAlgorithm) < 0) {
+            reject(Error(`unsupported hash algorithm: ${hashAlgorithm}`));
+        }
         const hash = crypto.createHash(hashAlgorithm);
         const rs = fs.createReadStream(fp);
         let hashStr = '';
         hash.on('readable', () => {
             const readData = hash.read();
-            const data = Buffer.isBuffer(readData)
-                ? readData
-                : Buffer.from(readData);
-            data && (hashStr += data.toString('hex'));
+            if (readData) {
+                const data = Buffer.isBuffer(readData)
+                    ? readData
+                    : Buffer.from(readData);
+                hashStr += data.toString('hex');
+            }
         });
         hash.on('end', () => {
             resolve(hashStr);
@@ -159,6 +161,7 @@ async function renameExts(dir, extMap = {}) {
         if (ext in _extMap) {
             const nfp = path.join(dir, `${path.basename(fp, ext)}${_extMap[ext]}`);
             await renameAsync(fp, nfp);
+            newDirList.push(nfp);
         }
         else {
             newDirList.push(fp);

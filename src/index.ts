@@ -158,20 +158,22 @@ export const cut: Function = mv;
  * @param hashAlgorithm 哈希算法名
  */
 export function hashFile(fp: string, hashAlgorithm: string): Promise<string> {
-    /* 系統不支持該哈希算法 */
-    if (crypto.getHashes().indexOf(hashAlgorithm) < 0) {
-        throw Error('insupport hash algorithm');
-    }
     return new Promise((resolve: Function, reject: Function) => {
+        /* 系統不支持該哈希算法 */
+        if (crypto.getHashes().indexOf(hashAlgorithm) < 0) {
+            reject(Error(`unsupported hash algorithm: ${hashAlgorithm}`));
+        }
         const hash: crypto.Hash = crypto.createHash(hashAlgorithm);
         const rs: fs.ReadStream = fs.createReadStream(fp);
         let hashStr: string = '';
         hash.on('readable', () => {
             const readData = hash.read();
-            const data: Buffer = Buffer.isBuffer(readData)
-                ? readData
-                : Buffer.from(readData);
-            data && (hashStr += data.toString('hex'));
+            if (readData) {
+                const data: Buffer = Buffer.isBuffer(readData)
+                    ? readData
+                    : Buffer.from(readData);
+                hashStr += data.toString('hex');
+            }
         });
         hash.on('end', () => {
             resolve(hashStr);
@@ -220,6 +222,7 @@ export async function renameExts(dir: string, extMap: { [key: string]: string } 
         if (ext in _extMap) {
             const nfp = path.join(dir, `${path.basename(fp, ext)}${_extMap[ext]}`);
             await renameAsync(fp, nfp);
+            newDirList.push(nfp);
         } else {
             newDirList.push(fp);
         }
